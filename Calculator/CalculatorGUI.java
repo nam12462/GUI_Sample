@@ -2,20 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-/**
- * After testing a few cases appeared that needs to be addressed.
- * First off when the result is shown the value is returned as a double, 
- *  any value that is after the decimal point cannot be altered and would have to be cleared so that. 
- * Or a decimal button could be added to account for decimal values. 
- * EX) 1/2=.5 .5+1=1.5
- * The next case is that when a value is divided by 0,
- *  there needs to be a statement that will appear in the result section saying the value is undefined.
- * EX) 1/0 = infinity or 1-2=-1/0=-infinity a simple checker would fix this issue. 
- * 		Issue is however, when the undefined statement is thrown and other operations are selected without clearing the textField
- * 		errors will appear because you cannot parse a string into a double. 
- * 		Need to research how to fix this. Maybe change the textField to zero?
- * The next potential addition could be a positive and negative button to account for negative values.
- * Over all a little more research would help.
+/** Originally this was a 4 function calculator, but now it should include the basic calculator functions from (+,-,*,/,"+/-",0.0)
+ * 	Adding the positive and negative button/function was simple; the decimal point button caused a little bit of issue,
+ *  by throwing a error and clearing the textfield but to solve this simply the text in the textfield was concatenated with a "." and it worked.
+ *  Wanted to set the decimal point so that if the first number was a decimal point would come after a "0," but that caused more issue and needs to be researched more.
 **/
 public class CalculatorGUI extends JFrame implements ActionListener {
 	private final int width = 300;
@@ -26,6 +16,8 @@ public class CalculatorGUI extends JFrame implements ActionListener {
 	private final JButton div;
 	private final JButton eql;
 	private final JButton clr;
+	private final JButton neg;
+	private final JButton dec;
 	
 	private TextField text;
 
@@ -65,7 +57,7 @@ public class CalculatorGUI extends JFrame implements ActionListener {
 		//Create a panel to put in the operators
 		//Should be done recursively, potentially using an array?
 		JPanel Operators = new JPanel();
-		Operators.setLayout(new GridLayout(4,1));
+		Operators.setLayout(new GridLayout(3,2));
 		addi = new JButton("+");
 		addi.addActionListener(this);
 		sub = new JButton("-");
@@ -74,10 +66,16 @@ public class CalculatorGUI extends JFrame implements ActionListener {
 		mul.addActionListener(this);
 		div = new JButton("/");	
 		div.addActionListener(this);
+		neg = new JButton("+/-");
+		neg.addActionListener(this);
+		dec = new JButton(".");
+		dec.addActionListener(this);
 		Operators.add(addi);
 		Operators.add(sub);
 		Operators.add(mul);
 		Operators.add(div);
+		Operators.add(neg);
+		Operators.add(dec);
 		
 		//Create a panel to place the numbers and operators
 		JPanel all_Buttons = new JPanel();
@@ -118,6 +116,15 @@ public class CalculatorGUI extends JFrame implements ActionListener {
 			a=Double.parseDouble(text.getText());
 			operatorSelected = 4;
 			text.setText("");
+		}if(arg.equals("+/-")){
+			//Had to assign the negative button to variable b so that it can be taken as second input,
+			// where as if it was var a then the program wouldn't allow the 
+			//second input to be negative and would just reassign the value back to var a and process from there.
+			b=Double.parseDouble(text.getText());
+			b = b * -1;
+			text.setText(Double.toString(b));
+		}if(arg.equals(".")){
+				text.setText(text.getText() + ".");
 		}if(arg.equals("=")) {
 			//When the equal button is pressed,
 			// the text in the textField is taken as the second input for the calculator and assigned to variable B
@@ -135,7 +142,9 @@ public class CalculatorGUI extends JFrame implements ActionListener {
 			}else if(operatorSelected == 4) {
 			result = a / b;
 				if(b==0) {
-					text.setText("undefined");
+					showMessageDialog();
+					text.setText(""); // Clear the text field
+					result = 0; //reset the result
 				}else {
 					text.setText(Double.toString(result));
 				}
@@ -143,5 +152,10 @@ public class CalculatorGUI extends JFrame implements ActionListener {
 
 		}
 
+	}
+
+	private void showMessageDialog() {
+		System.out.println("undefined");
+		
 	}
 }
