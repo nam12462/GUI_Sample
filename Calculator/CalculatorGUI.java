@@ -93,8 +93,7 @@ public class CalculatorGUI extends JFrame implements ActionListener {
 				text.setText(text.getText() + i);
 			}
 		}
-		//Clear the text field
-		if(arg.equals("c")) {
+		if(arg.equals("c")) {//Clear the text field
 			text.setText("");
 		}
 		//Extracts the value in the textField and assign it to variable A
@@ -124,38 +123,35 @@ public class CalculatorGUI extends JFrame implements ActionListener {
 			b = b * -1;
 			text.setText(Double.toString(b));
 		}if(arg.equals(".")){
-				text.setText(text.getText() + ".");
+			text.setText(text.getText() + ".");
 		}if(arg.equals("=")) {
 			//When the equal button is pressed,
 			// the text in the textField is taken as the second input for the calculator and assigned to variable B
 			//Then the operation that was selected is checked and the result is determined, and displayed in the textField.
 			b=Double.parseDouble(text.getText());
 			if(operatorSelected == 1) {
-			result = a + b;
-			text.setText(Double.toString(result));
+				result = a + b;
+				text.setText(Double.toString(result));
 			}else if(operatorSelected == 2) {
-			result = a - b;
-			text.setText(Double.toString(result));
+				result = a - b;
+				text.setText(Double.toString(result));
 			}else if(operatorSelected == 3) {
-			result = a * b;
-			text.setText(Double.toString(result));
+				result = a * b;
+				text.setText(Double.toString(result));
 			}else if(operatorSelected == 4) {
-			result = a / b;
+				result = a / b;
 				if(b==0) {
-					showMessageDialog();
+					error();
 					text.setText(""); // Clear the text field
 					result = 0; //reset the result
 				}else {
 					text.setText(Double.toString(result));
 				}
 			}
-
 		}
-
 	}
 
-	private void showMessageDialog() {
-		System.out.println("undefined");
-		
+	private void error() {
+		System.out.print("Dividing by a zero is undefined!");
 	}
 }
