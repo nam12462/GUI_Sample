@@ -6,7 +6,13 @@ import java.util.Random;
 import javax.swing.*;
 import javax.swing.Timer;
 
-/**
+/** IMPORTANT: After thinking about this program, I realized my mistake. I set the y-value to be random instead of 
+ *  setting them initially as 0, where by making the dots appear randomly. If I had set the y-values to zero and just added 
+ *  the random values. Then the dots may have all fallen from the top at random speeds.
+ *   I should have also just made a rain drop class instead of the way I set it up here.
+ *
+ *
+ * 
  * Could have set the x and y positions into a 2D array or an arraylist just so that it is less actual coding. 
  *
  **/
