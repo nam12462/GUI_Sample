@@ -14,36 +14,30 @@ import javax.swing.Timer;
 public class Rain2 extends JPanel implements ActionListener{
 	Timer t = new Timer(100, this); //Had to change the increase the timers so that the objects appear slower.
 	private double[] x_position = new double[100]; //used for random position on x-axis
-	private double[] y_position = new double[100];// set the initial speed of the rain drops
+	private double[] y_position = new double[100]; //Needed y positions to all be at zero initially 
 	private double[] Velocity = new double[100]; //Array of random velocities that can be called.
 	Random ran = new Random();	
 	
 	public void Vel(){
 		for(int i=0;i<Velocity.length;i++){
-			Velocity[i]=Math.random();//Should only product values between 0-1 and fill the array with some value
+			Velocity[i]=Math.random()*50; //Should fill the array with random values as the velocity to be added to the y-value later
 		}
 	}
 
 	public void x_location(){
 		for(int i=0;i<x_position.length;i++){
-			x_position[i]=ran.nextInt(500);
-		}
-	}
-	public void y_location() {
-		for(int i=0;i<y_position.length;i++) {
-			y_position[i]=ran.nextInt(300);
+			x_position[i]=ran.nextInt(500); //Product a random set of integers on the x-axis
 		}
 	}
 	
 	public void paintComponent(Graphics g){
 		t.start();
-		Vel();
-		x_location();
-		y_location();
+		Vel(); //Called so that the velocities are set
+		x_location(); //Called to set the x-values
 		
 		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D) g;
-		g2.setColor(Color.CYAN);
+		Graphics2D g2 = (Graphics2D) g; 
+		g2.setColor(Color.CYAN); //Create a simple background color
 		g2.fillRect(0,0,525,350);
 		
 		g2.setColor(Color.BLUE);
@@ -55,7 +49,7 @@ public class Rain2 extends JPanel implements ActionListener{
 	}
 	public void actionPerformed(ActionEvent e){
 		for(int i=0;i<Velocity.length;i++) {
-			if(y_position[i]>300){
+			if(y_position[i]>350){
 				y_position[i] = 0;
 			}
 			y_position[i]+=Velocity[i];
